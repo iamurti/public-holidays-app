@@ -18,7 +18,10 @@ function App() {
       <div className="App-content">
         <h1>Public Holidays</h1>
         <div className="countries">
-          <select>
+          <select value={selectedCountry} onChange={(e) => {
+            setSelectedCountry(e.target.value)
+            getHolidays(e.target.value).then(holidays => setHolidays(holidays))
+          }}>
             {
               countries.map((val) => <option key={val.isoCode} value={val.isoCode}>{val.name[0].text}</option>)
             }
