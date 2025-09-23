@@ -17,18 +17,12 @@ Build a React application that shows the national holidays for the current year,
    npm install
    ```
 
-2. Start the development server:
-   ```sh
-   npm run dev
-   ```
-   This will start the app in development mode with hot reload enabled.
-
-3. Start the server with the default script:
+2. Start the server with the default script:
    ```sh
    npm start
    ```
 
-4. Build the project for production:
+3. Build the project for production:
    ```sh
    npm run build
    ```
