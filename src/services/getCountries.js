@@ -3,7 +3,7 @@ export default function getCountries() {
     return fetch(apiURL)
       .then(res => res.json())
       .then(data => {
-        //console.log(data)
+        console.log(data)
         const countries = data.map(country => country)
         return countries
       })
