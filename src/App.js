@@ -16,14 +16,15 @@ function App() {
   return (
     <div className="App">
       <div className="App-content">
-        <div>
+        <h1>Public Holidays</h1>
+        <div className="countries">
           <select>
             {
               countries.map((val) => <option key={val.isoCode} value={val.isoCode}>{val.name[0].text}</option>)
             }
           </select>
         </div>
-        <div>
+        <div className="holidays">
           {
             holidays.map((val) => {
               const date = new Date(val.startDate)
