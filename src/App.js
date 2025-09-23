@@ -1,19 +1,12 @@
 import { useEffect, useState } from 'react';
 import './App.css';
+import getCountries from './services/getCountries';
 
 function App() {
   const [countries, setCountries] = useState([])
-  const apiURL = 'https://openholidaysapi.org/Countries?languageIsoCode=en'
 
   useEffect(() => {
-    fetch(apiURL)
-      .then(res => res.json())
-      .then(data => {
-        //console.log(data)
-        const countries = data.map(country => country)
-        setCountries(countries)
-      })
-      .catch(err => console.error(err))
+    getCountries().then(countries => setCountries(countries))
   }, [])
 
   return (
