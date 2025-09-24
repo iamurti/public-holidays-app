@@ -1,27 +1,36 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 import getCountries from './services/getCountries';
 import getHolidays from './services/getHolidays';
+import { useQuery } from '@tanstack/react-query'
 
 function App() {
-  const [countries, setCountries] = useState([])
-  const [holidays, setHolidays] = useState([])
+
   const [selectedCountry, setSelectedCountry] = useState('NL')
-  
-  useEffect(() => {
-    getCountries().then(countries => setCountries(countries))
-    getHolidays(selectedCountry).then(holidays => setHolidays(holidays))
-  }, [])
+
+  const { data: countries = [], isLoading: loadingCountries } =
+    useQuery({
+      queryKey: ['countries'],
+      queryFn: getCountries
+    })
+
+  const { data: holidays = [], isLoading: loadingHolidays } =
+    useQuery({
+      queryKey: ['holidays', selectedCountry],
+      queryFn: () => getHolidays(selectedCountry)
+    })
+
+  if (loadingCountries || loadingHolidays) return <p>Loading…</p>
 
   return (
     <div className="App">
       <div className="App-content">
         <h1>Public Holidays</h1>
         <div className="countries">
-          <select value={selectedCountry} onChange={(e) => {
-            setSelectedCountry(e.target.value)
-            getHolidays(e.target.value).then(holidays => setHolidays(holidays))
-          }}>
+          <select 
+            value={selectedCountry}
+            onChange={(e) => setSelectedCountry(e.target.value)}
+          >
             {
               countries.map((val) => <option key={val.isoCode} value={val.isoCode}>{val.name[0].text}</option>)
             }
@@ -42,3 +51,4 @@ function App() {
 }
 
 export default App;
+ 
